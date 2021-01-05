@@ -4,7 +4,7 @@ Backend of the end assignment for the minor Advanced Java
 ## Setup Instructions
 The following steps need to be completed after cloning the repo.
 
-### Setting up the database constants
+### Setting up the database
 1. Create a local mySQL database for the project
 2. Create a Java class called ``DatabaseConstants`` in ``nhl.stenden.util``.
 3. Paste the following code in the ``nhl.stenden.util.DatabaseConstants``:

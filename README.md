@@ -16,10 +16,6 @@ package nhl.stenden.util;
       public static final String USERNAME = "root";
       public static final String PASSWORD = "";
       public static final String URL = "jdbc:mysql://localhost:3306/holotopia";
-  
-      private DatabaseConstants(){
-          throw new IllegalStateException("Utility class");
-      }
   }
 ```
 4. Replace the values of the database constants with the info of your local database in ```nhl.stenden.util.DatabaseConstants```

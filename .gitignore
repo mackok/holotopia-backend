@@ -96,3 +96,5 @@ fabric.properties
 
 # Init constants for local database
 src/main/java/nhl/stenden/util/DatabaseConstants.java
+
+.idea/*

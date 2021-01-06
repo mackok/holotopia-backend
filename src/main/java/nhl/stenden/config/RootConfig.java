@@ -1,6 +1,7 @@
 package nhl.stenden.config;
 
 import nhl.stenden.util.EMFGenerator;
+import nhl.stenden.util.handler.request.YoutubeRequestHandler;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -17,7 +18,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
 
-import static nhl.stenden.util.DatabaseConstants.*;
+import static nhl.stenden.util.constants.DatabaseConstants.*;
 
 @Configuration
 @EnableWebMvc
@@ -28,6 +29,7 @@ public class RootConfig {
     Properties additionalProperties() {
         Properties properties = new Properties();
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
+        properties.setProperty("spring.jpa.properties.hibernate.hbm2ddl.auto", "update");
         return properties;
     }
 
@@ -61,5 +63,10 @@ public class RootConfig {
     @Bean
     public BCryptPasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public YoutubeRequestHandler ytRequestHandler(){
+        return new YoutubeRequestHandler();
     }
 }

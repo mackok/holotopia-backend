@@ -6,7 +6,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import javax.sql.DataSource;
 import java.util.Properties;
 
-public class EMFGenerator extends UtilClass{
+public class EMFGenerator extends UtilClass {
 
     public static LocalContainerEntityManagerFactoryBean generate(DataSource dataSource, Properties additionalProperties){
         final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();

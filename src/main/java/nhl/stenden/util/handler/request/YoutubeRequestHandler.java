@@ -21,6 +21,12 @@ public class YoutubeRequestHandler {
     private static final String APP_NAME = "Holotopia";
     private static final JacksonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 
+    /**
+     * Gets all video ids from a YouTube channel.
+     *
+     * @param uploadsId the id of the channel uploads
+     * @return A list of all video ids
+     */
     public List<String> getAllVideoIds(String uploadsId){
         List<String> videoIds = new ArrayList<>();
         List<PlaylistItem> videos = getAllVideos(uploadsId);

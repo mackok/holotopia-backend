@@ -16,11 +16,11 @@ public class HololiveMemberDTO {
     @Size(min = 3, max = 60)
     private String name;
 
-    @JsonProperty("channel")
+    @JsonProperty("channel_id")
     @Size(min = 1, max = 60)
     private String channel;
 
-    @JsonProperty("uploads")
+    @JsonProperty("uploads_id")
     @Size(min = 1, max = 60)
     private String uploads;
 }

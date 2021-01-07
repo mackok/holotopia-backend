@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Repository
 @Transactional
@@ -20,5 +21,9 @@ public class HololiveMemberRepository {
 
     public void addMember(HololiveMember hololiveMember){
         em.persist(hololiveMember);
+    }
+
+    public List<HololiveMember> getAllMembers(){
+        return em.createQuery("select m from HololiveMember m", HololiveMember.class).getResultList();
     }
 }

@@ -1,7 +1,6 @@
 package nhl.stenden.config;
 
 import nhl.stenden.util.EMFGenerator;
-import nhl.stenden.util.handler.request.YoutubeRequestHandler;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -63,10 +62,5 @@ public class RootConfig {
     @Bean
     public BCryptPasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public YoutubeRequestHandler ytRequestHandler(){
-        return new YoutubeRequestHandler();
     }
 }

@@ -8,21 +8,24 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
 
 import static nhl.stenden.util.constants.DatabaseConstants.*;
+import static org.springframework.context.annotation.ComponentScan.Filter;
 
 @Configuration
-@EnableWebMvc
+@EnableScheduling
 @EnableTransactionManagement
-@ComponentScan(basePackages = {"nhl.stenden"})
+@EnableAsync
+@ComponentScan(basePackages = {"nhl.stenden"}, excludeFilters = {@Filter(org.springframework.stereotype.Controller.class)})
 public class RootConfig {
 
     Properties additionalProperties() {

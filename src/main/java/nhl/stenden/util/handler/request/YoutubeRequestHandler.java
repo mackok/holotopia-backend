@@ -11,16 +11,17 @@ import nhl.stenden.model.Video;
 import nhl.stenden.repository.HololiveMemberRepository;
 import nhl.stenden.repository.VideoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 import static nhl.stenden.util.constants.APIConstants.*;
 
@@ -45,38 +46,27 @@ public class YoutubeRequestHandler {
         }
     }
 
-    //Todo: change x in comment to amount of minutes
-    /**
-     * Gets information from the YouTube API every x minutes.
-     */
-    private void startTask(){
-        Runnable task = this::updateInfo;
-        //Todo: change delay after testing
-        int delay = 15;
-        ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-        scheduler.scheduleAtFixedRate(task, 0, delay, TimeUnit.MINUTES);
-    }
-
     /**
      * Updates the database with necessary info from the YouTube API.
      */
-    private void updateInfo(){
-        Thread thread = new Thread(() -> {
-            for(HololiveMember member : memberRepository.getAllMembers()){
-                Set<Video> storedVideos = member.getVideos();
+    @Async
+    @Scheduled(fixedDelay = 1000 * 60 * 15)
+    void updateInfo(){
+        System.out.println("Updating hololive videos in the database...");
+        List<HololiveMember> members = memberRepository.getAllMembers();
+        for(HololiveMember member : members){
+            Set<Video> storedVideos = member.getVideos();
 
-                if(storedVideos.isEmpty()){
-                    List<PlaylistItem> videoItems = getAllVideos(member.getUploads());
-                    List<Video> videos = convertPlaylistItems(videoItems, member);
-                    videoRepository.addVideos(videos);
-                }
-                else{
-                    storeLatestVideos(member);
-                }
+            if(storedVideos.isEmpty()){
+                List<PlaylistItem> videoItems = getAllVideos(member.getUploads());
+                List<Video> videos = convertPlaylistItems(videoItems, member);
+                videoRepository.addVideos(videos);
             }
-            System.out.println("Updating of hololive videos complete");
-        });
-        thread.start();
+            else{
+                storeLatestVideos(member);
+            }
+        }
+        System.out.println("Updating of hololive videos complete");
     }
 
     /**
@@ -101,23 +91,6 @@ public class YoutubeRequestHandler {
                 videoRepository.addVideo(convertPlaylistItem(video, member));
             }
         }
-    }
-
-    /**
-     * Gets all video ids from a YouTube channel.
-     *
-     * @param uploadsId the id of the channel uploads
-     * @return A list of all video ids
-     */
-    public List<String> getAllVideoIds(String uploadsId){
-        List<String> videoIds = new ArrayList<>();
-        List<PlaylistItem> videos = getAllVideos(uploadsId);
-
-        for (PlaylistItem playlistItem : videos) {
-            videoIds.add(playlistItem.getContentDetails().getVideoId());
-        }
-
-        return videoIds;
     }
 
     /**

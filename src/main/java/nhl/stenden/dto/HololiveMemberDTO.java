@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import nhl.stenden.model.Video;
 
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -23,4 +25,6 @@ public class HololiveMemberDTO {
     @JsonProperty("uploads_id")
     @Size(min = 1, max = 60)
     private String uploads;
+
+    private Set<Video> videos;
 }

@@ -31,6 +31,6 @@ public class HololiveMember {
     @NotNull
     private String uploads;
 
-    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "member")
     private Set<Video> videos;
 }

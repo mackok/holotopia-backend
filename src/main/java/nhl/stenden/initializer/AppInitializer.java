@@ -1,6 +1,7 @@
 package nhl.stenden.initializer;
 
 import nhl.stenden.config.RootConfig;
+import nhl.stenden.config.WebConfig;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
@@ -11,7 +12,7 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class<?>[]{RootConfig.class};
+        return new Class<?>[]{WebConfig.class};
     }
 
     @Override

@@ -1,4 +1,4 @@
-package nhl.stenden.util.handler.request;
+package nhl.stenden.util.handler.api;
 
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -12,11 +12,9 @@ import nhl.stenden.repository.HololiveMemberRepository;
 import nhl.stenden.repository.VideoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import javax.transaction.Transactional;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
@@ -26,7 +24,7 @@ import java.util.Set;
 import static nhl.stenden.util.constants.APIConstants.*;
 
 @Component
-public class YoutubeRequestHandler {
+public class YoutubeAPIHandler {
 
     private static final String APP_NAME = "Holotopia";
     private static final JacksonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
@@ -35,7 +33,7 @@ public class YoutubeRequestHandler {
     private YouTube youtubeService;
 
     @Autowired
-    public YoutubeRequestHandler(HololiveMemberRepository memberRepository, VideoRepository videoRepository){
+    public YoutubeAPIHandler(HololiveMemberRepository memberRepository, VideoRepository videoRepository){
         this.memberRepository = memberRepository;
         this.videoRepository = videoRepository;
 

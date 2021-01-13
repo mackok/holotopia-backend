@@ -28,6 +28,14 @@ public class Video {
     @NotNull
     private String youtubeCode;
 
+    @Column(name = "player_source")
+    @Size(max = 100)
+    private String playerSource;
+
+    @Column(name = "sts")
+    @Size(min = 5, max = 5)
+    private String sts;
+
     @Column(name = "m3u8")
     @Size(max = 200)
     private String m3u8;

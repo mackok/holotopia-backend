@@ -15,12 +15,15 @@ public class ManifestHandler {
     private final VideoRepository videoRepository;
     private final EmbedPageHandler embedPageHandler;
     private final PlayerSourceHandler playerSourceHandler;
+    private final ManifestDownloadHandler manifestDownloadHandler;
 
     @Autowired
-    public ManifestHandler(VideoRepository videoRepository, EmbedPageHandler embedPageHandler, PlayerSourceHandler playerSourceHandler){
+    public ManifestHandler(VideoRepository videoRepository, EmbedPageHandler embedPageHandler,
+                           PlayerSourceHandler playerSourceHandler, ManifestDownloadHandler manifestDownloadHandler){
         this.videoRepository = videoRepository;
         this.embedPageHandler = embedPageHandler;
         this.playerSourceHandler = playerSourceHandler;
+        this.manifestDownloadHandler = manifestDownloadHandler;
     }
 
     @Async
@@ -36,6 +39,9 @@ public class ManifestHandler {
             else if(video.getSts() == null){
                 video.setSts(playerSourceHandler.getSts(video.getPlayerSource()));
                 videoRepository.updateVideo(video);
+            }
+            else {
+                //manifestDownloadHandler.getManifest(video);
             }
         }
     }

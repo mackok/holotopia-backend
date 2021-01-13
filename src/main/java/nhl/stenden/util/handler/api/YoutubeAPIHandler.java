@@ -51,7 +51,7 @@ public class YoutubeAPIHandler {
     @Scheduled(fixedDelay = 1000 * 60 * 15)
     void updateInfo(){
         System.out.println("Updating hololive videos in the database...");
-        List<HololiveMember> members = memberRepository.getAllMembers();
+        List<HololiveMember> members = memberRepository.getAllMembersWithVideos();
         for(HololiveMember member : members){
             Set<Video> storedVideos = member.getVideos();
 

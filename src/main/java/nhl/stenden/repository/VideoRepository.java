@@ -28,4 +28,12 @@ public class VideoRepository {
             addVideo(video);
         }
     }
+
+    public void updateVideo(Video video){
+        em.merge(video);
+    }
+
+    public List<Video> getAllVideos(){
+        return em.createQuery("select v from Video v", Video.class).getResultList();
+    }
 }

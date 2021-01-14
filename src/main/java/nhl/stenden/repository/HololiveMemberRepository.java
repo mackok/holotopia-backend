@@ -9,6 +9,9 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
 
+/**
+ * Repository that handles queries to the 'hololive_member' table in the database.
+ */
 @Repository
 @Transactional
 public class HololiveMemberRepository {
@@ -16,18 +19,18 @@ public class HololiveMemberRepository {
     @PersistenceContext
     private EntityManager em;
 
-    public HololiveMember findMemberById(Long id){
-        return em.find(HololiveMember.class, id);
-    }
-
+    /**
+     * Adds a hololive member to the 'hololive_member' table in the database.
+     * @param hololiveMember the hololive member that should be added to the database
+     */
     public void addMember(HololiveMember hololiveMember){
         em.persist(hololiveMember);
     }
 
-    public List<HololiveMember> getAllMembers(){
-       return em.createQuery("select m from HololiveMember m", HololiveMember.class).getResultList();
-    }
-
+    /**
+     * Gets all hololive members from the database and initializes all of their videos.
+     * @return a list of all hololive members in the database
+     */
     public List<HololiveMember> getAllMembersWithVideos(){
         List<HololiveMember> members = em.createQuery("select m from HololiveMember m", HololiveMember.class).getResultList();
         for(HololiveMember member : members){

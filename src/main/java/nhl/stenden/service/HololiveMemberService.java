@@ -7,6 +7,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service that handles the business logic of requests related to hololive members.
+ */
 @Service
 public class HololiveMemberService {
 
@@ -19,10 +22,10 @@ public class HololiveMemberService {
         this.modelMapper = modelMapper;
     }
 
-    public HololiveMemberDTO getById(Long id){
-        return modelMapper.map(repository.findMemberById(id), HololiveMemberDTO.class);
-    }
-
+    /**
+     * Maps a hololive member DTO to a model and adds it to the database.
+     * @param hololiveMember the DTO of the hololive member that should be added
+     */
     public void addMember(HololiveMemberDTO hololiveMember){
         repository.addMember(modelMapper.map(hololiveMember, HololiveMember.class));
     }

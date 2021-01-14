@@ -8,8 +8,8 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "video")
-@Getter
-@Setter
+@Getter //Don't change to @Data, causes StackOverflowException
+@Setter //Don't change to @Data, causes StackOverflowException
 @NoArgsConstructor
 @AllArgsConstructor
 public class Video {

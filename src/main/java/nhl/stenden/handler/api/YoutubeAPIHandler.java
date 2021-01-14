@@ -1,4 +1,4 @@
-package nhl.stenden.util.handler.api;
+package nhl.stenden.handler.api;
 
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -23,6 +23,9 @@ import java.util.Set;
 
 import static nhl.stenden.util.constants.APIConstants.*;
 
+/**
+ * Class that handles requests to the YouTube API.
+ */
 @Component
 public class YoutubeAPIHandler {
 

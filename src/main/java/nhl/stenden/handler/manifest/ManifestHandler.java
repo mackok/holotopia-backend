@@ -1,4 +1,4 @@
-package nhl.stenden.util.handler.manifest;
+package nhl.stenden.handler.manifest;
 
 import nhl.stenden.model.Video;
 import nhl.stenden.repository.VideoRepository;
@@ -9,6 +9,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/**
+ * Class that handles the process of getting a manifest from a video ID.
+ */
 @Component
 public class ManifestHandler {
 
@@ -26,6 +29,7 @@ public class ManifestHandler {
         this.manifestDownloadHandler = manifestDownloadHandler;
     }
 
+    //Todo: Change name and add javadoc.
     @Async
     @Scheduled(fixedDelay = 1000 * 60 * 15)
     public void getAllEmbedPages(){

@@ -8,6 +8,9 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
 
+/**
+ * Repository that handles queries to the 'video' table in the database.
+ */
 @Repository
 @Transactional
 public class VideoRepository {
@@ -15,24 +18,36 @@ public class VideoRepository {
     @PersistenceContext
     private EntityManager em;
 
-    public Video findVideoById(Long id){
-        return em.find(Video.class, id);
+    /**
+     * Adds a video to the 'video' table in the database.
+     * @param video the video that needs to be added to the database
+     */
+    public void addVideo(Video video){
+        em.persist(video);
     }
 
-    public void addVideo(Video hololiveMember){
-        em.persist(hololiveMember);
-    }
-
+    /**
+     * Adds a list of videos to the 'video' table in the database.
+     * @param videos the videos that needs to be added to the database
+     */
     public void addVideos(List<Video> videos){
         for (Video video : videos){
             addVideo(video);
         }
     }
 
+    /**
+     * Updates a video from the 'video' table in the database.
+     * @param video the updated video that should be added to the database
+     */
     public void updateVideo(Video video){
         em.merge(video);
     }
 
+    /**
+     * Gets all videos from the 'video' table in the database.
+     * @return a list of all videos in the database
+     */
     public List<Video> getAllVideos(){
         return em.createQuery("select v from Video v", Video.class).getResultList();
     }

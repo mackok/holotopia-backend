@@ -1,4 +1,4 @@
-package nhl.stenden.util.handler.manifest;
+package nhl.stenden.handler.manifest;
 
 import org.springframework.stereotype.Component;
 
@@ -9,9 +9,17 @@ import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Class that handles the process of getting a player source URL using a YouTube video ID.
+ */
 @Component
 public class EmbedPageHandler {
 
+    /**
+     * Gets the player source URL from the related embed page.
+     * @param videoId the YouTube ID of the video whose player source URL should be extracted
+     * @return the player source URL that is used in the video
+     */
     public String getSourceURL(String videoId){
         String page = getEmbedPage(videoId);
         Pattern pattern = Pattern.compile("(?<=\"jsUrl\":\")(.+?)(?=\",)");
@@ -24,6 +32,11 @@ public class EmbedPageHandler {
         return output;
     }
 
+    /**
+     * Gets the related embed page from a video using it's YouTube ID
+     * @param videoId the YouTube ID of the video whose embed page should be retrieved
+     * @return a String containing the source code of the embed page
+     */
     private String getEmbedPage(String videoId){
         StringBuilder embedPage = new StringBuilder();
 

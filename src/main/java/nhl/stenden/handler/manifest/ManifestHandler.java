@@ -29,10 +29,13 @@ public class ManifestHandler {
         this.manifestDownloadHandler = manifestDownloadHandler;
     }
 
-    //Todo: Change name and add javadoc.
+    public String getManifest(Video video){
+        return manifestDownloadHandler.getManifest(video);
+    }
+
     @Async
     @Scheduled(fixedDelay = 1000 * 60 * 15)
-    public void getAllEmbedPages(){
+    public void updateInfo(){
         List<Video> videos = videoRepository.getAllVideos();
 
         for(Video video : videos){
@@ -40,12 +43,10 @@ public class ManifestHandler {
                 video.setPlayerSource(embedPageHandler.getSourceURL(video.getYoutubeCode()));
                 videoRepository.updateVideo(video);
             }
-            else if(video.getSts() == null){
+
+            if(video.getSts() == null){
                 video.setSts(playerSourceHandler.getSts(video.getPlayerSource()));
                 videoRepository.updateVideo(video);
-            }
-            else {
-                //manifestDownloadHandler.getManifest(video);
             }
         }
     }

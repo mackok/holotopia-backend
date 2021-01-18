@@ -5,8 +5,8 @@ import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.net.URL;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Class that handles retrieving and decrypting the encrypted manifest file.
@@ -14,16 +14,15 @@ import java.util.regex.Pattern;
 @Component
 public class ManifestDownloadHandler {
 
-    //Todo: Decrypt manifest.
+    /**
+     * Gets the decrypted manifest from a video.
+     * @param video the video whose manifest should be retrieved
+     * @return a String containing the decrypted manifest
+     */
     public String getManifest(Video video){
-        String page = getManifestFile(video);
-        Pattern pattern = Pattern.compile("(?<=sts:)\\d{5}");
-        Matcher matcher = pattern.matcher(page);
-        String output = "";
-
-        while(matcher.find()){
-            output = matcher.group();
-        }
+        String output = getManifestFile(video);
+        output = URLDecoder.decode(output, StandardCharsets.UTF_8);
+        output = output.replace("\\u0026", "&");
         return output;
     }
 

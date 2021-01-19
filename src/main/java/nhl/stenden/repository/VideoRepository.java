@@ -51,4 +51,14 @@ public class VideoRepository {
     public List<Video> getAllVideos(){
         return em.createQuery("select v from Video v", Video.class).getResultList();
     }
+
+    /**
+     * Gets a video from the 'video' table in the database.
+     * @param youtubeVideoId the youtube ID of the video
+     * @return the video
+     */
+    public Video getVideoByYtId(String youtubeVideoId){
+        return (Video) em.createQuery("select v from Video v where youtube_id = :youtubeId")
+                .setParameter("youtubeId", youtubeVideoId).getSingleResult();
+    }
 }

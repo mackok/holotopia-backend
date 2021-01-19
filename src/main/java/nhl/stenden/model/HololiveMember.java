@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "hololive_member")
@@ -32,5 +32,5 @@ public class HololiveMember {
     private String uploads;
 
     @OneToMany(mappedBy = "member")
-    private Set<Video> videos;
+    private List<Video> videos;
 }

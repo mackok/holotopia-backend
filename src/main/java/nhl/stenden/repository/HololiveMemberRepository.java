@@ -38,4 +38,15 @@ public class HololiveMemberRepository {
         }
         return members;
     }
+
+    /**
+     * Gets a hololive member by it's ID from the 'hololive_member' table in the database.
+     * @param memberId the ID of the hololive member
+     * @return the hololive member
+     */
+    public HololiveMember getMemberById(Long memberId){
+        HololiveMember member = em.find(HololiveMember.class, memberId);
+        Hibernate.initialize(member.getVideos());
+        return member;
+    }
 }

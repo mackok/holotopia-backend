@@ -16,15 +16,13 @@ public class VideoInfoHandler {
     private final VideoRepository videoRepository;
     private final EmbedPageHandler embedPageHandler;
     private final PlayerSourceHandler playerSourceHandler;
-    private final ManifestHandler manifestHandler;
 
     @Autowired
     public VideoInfoHandler(VideoRepository videoRepository, EmbedPageHandler embedPageHandler,
-                           PlayerSourceHandler playerSourceHandler, ManifestHandler manifestHandler){
+                           PlayerSourceHandler playerSourceHandler){
         this.videoRepository = videoRepository;
         this.embedPageHandler = embedPageHandler;
         this.playerSourceHandler = playerSourceHandler;
-        this.manifestHandler = manifestHandler;
     }
 
     public void updateInfo(){

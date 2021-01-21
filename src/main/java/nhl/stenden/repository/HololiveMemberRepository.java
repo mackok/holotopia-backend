@@ -45,8 +45,6 @@ public class HololiveMemberRepository {
      * @return the hololive member
      */
     public HololiveMember getMemberById(Long memberId){
-        HololiveMember member = em.find(HololiveMember.class, memberId);
-        Hibernate.initialize(member.getVideos());
-        return member;
+        return em.find(HololiveMember.class, memberId);
     }
 }

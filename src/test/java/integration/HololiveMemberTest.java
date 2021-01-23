@@ -1,9 +1,7 @@
 package integration;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nhl.stenden.config.TestConfig;
-import nhl.stenden.dto.HololiveMemberDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,6 +18,7 @@ import org.springframework.web.context.WebApplicationContext;
 import javax.transaction.Transactional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
@@ -65,12 +64,43 @@ class HololiveMemberTest {
                 "}";
 
         addMember()
-                .andExpect(status().is5xxServerError());
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void addMemberNoChannelIdTest()  throws Exception {
+        member = "{" +
+                "\"name\":\"Gawr Gura\"," +
+                "\"uploads_id\":\"UUoSrY_IQQVpmIRZ9Xf-y93g\"" +
+                "}";
+
+        addMember()
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void addMemberNoUploadsIdTest()  throws Exception {
+        member = "{" +
+                "\"name\":\"Gawr Gura\"," +
+                "\"channel_id\":\"UCoSrY_IQQVpmIRZ9Xf-y93g\"," +
+                "}";
+
+        addMember()
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void getMemberVideosStatusOKTest() throws Exception {
+        
     }
 
     private ResultActions addMember() throws Exception {
         return mockMvc.perform(post("/hololive-members")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(member));
+    }
+
+    private ResultActions getMemberVideos(Long memberId) throws Exception {
+        return mockMvc.perform(get("/hololive-members/" + memberId + "/videos"));
     }
 }

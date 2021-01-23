@@ -19,6 +19,9 @@ public class ScheduleHandler {
         this.videoInfoHandler = videoInfoHandler;
     }
 
+    /**
+     * Updates the database with information that should be requested and stored every 15 minutes.
+     */
     @Async
     @Scheduled(fixedDelay = 1000 * 60 * 15)
     public void updateInfo(){

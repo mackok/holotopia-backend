@@ -33,6 +33,25 @@ public class HololiveMemberController {
     }
 
     /**
+     * Put request that updates a hololive member from the database.
+     * @param id the ID of the hololive member that should be updated
+     * @param member the hololive member, with updated data, that should be updated in the database
+     */
+    @PutMapping("/{id}")
+    public void updateMember(@PathVariable Long id, @RequestBody @Valid HololiveMemberDTO member){
+        service.updateMember(id, member);
+    }
+
+    /**
+     * Delete request that deletes a hololive member from the database.
+     * @param id the ID of the hololive member that should be deleted
+     */
+    @DeleteMapping("/{id}")
+    public void deleteMember(@PathVariable Long id){
+        service.deleteMember(id);
+    }
+
+    /**
      * Get request that retrieves all videos from a hololive member.
      * @param id the ID of the hololive member whose videos should be retrieved
      * @return a list containing all videos from the hololive member

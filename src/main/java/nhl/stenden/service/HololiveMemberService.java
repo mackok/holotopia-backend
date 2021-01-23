@@ -3,7 +3,7 @@ package nhl.stenden.service;
 import nhl.stenden.dto.HololiveMemberDTO;
 import nhl.stenden.dto.VideoDTO;
 import nhl.stenden.exception.IncorrectPathVariableException;
-import nhl.stenden.exception.IncorrectPropertiesException;
+import nhl.stenden.handler.SpringExceptionHandler;
 import nhl.stenden.model.HololiveMember;
 import nhl.stenden.repository.HololiveMemberRepository;
 import nhl.stenden.util.ModelMapperUtil;
@@ -31,14 +31,40 @@ public class HololiveMemberService {
 
     /**
      * Maps a hololive member DTO to a model and adds it to the database.
-     * @param hololiveMember the DTO of the hololive member that should be added
+     * @param memberDTO the DTO of the hololive member that should be added
      */
-    public void addMember(HololiveMemberDTO hololiveMember){
-        if(hololiveMember.getName() == null || hololiveMember.getChannel() == null || hololiveMember.getUploads() == null){
-            throw new IncorrectPropertiesException("'name', 'channel' and 'uploads' are necessary properties and can not be null");
+    public void addMember(HololiveMemberDTO memberDTO){
+        HololiveMember member = modelMapper.map(memberDTO, HololiveMember.class);
+        SpringExceptionHandler.checkMemberProperties(member);
+        repository.addMember(member);
+    }
+
+    /**
+     * Maps a hololive member DTO to a model and updates it in the database.
+     * @param memberId the ID of the hololive member that should be updated
+     * @param memberDTO the hololive member, with updated data, that should be updated in the database
+     */
+    public void updateMember(Long memberId, HololiveMemberDTO memberDTO){
+        HololiveMember member = modelMapper.map(memberDTO, HololiveMember.class);
+        member.setId(memberId);
+        SpringExceptionHandler.checkMemberId(repository, memberId);
+        SpringExceptionHandler.checkMemberProperties(member);
+        repository.updateMember(member);
+    }
+
+    /**
+     * Deletes a hololive member from the database.
+     * @param memberId the ID of the member that should be deleted
+     */
+    @Transactional
+    public void deleteMember(Long memberId){
+        HololiveMember member = repository.getMemberById(memberId);
+
+        if(member == null){
+            throw new IncorrectPathVariableException(String.format("there is no member with the ID '%s'", memberId));
         }
 
-        repository.addMember(modelMapper.map(hololiveMember, HololiveMember.class));
+        repository.deleteMember(member);
     }
 
     /**

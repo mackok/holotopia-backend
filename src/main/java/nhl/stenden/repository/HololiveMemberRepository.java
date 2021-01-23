@@ -20,11 +20,27 @@ public class HololiveMemberRepository {
     private EntityManager em;
 
     /**
-     * Adds a hololive member to the 'hololive_member' table in the database.
+     * Adds a hololive member to the database.
      * @param hololiveMember the hololive member that should be added to the database
      */
     public void addMember(HololiveMember hololiveMember){
         em.persist(hololiveMember);
+    }
+
+    /**
+     * Updates a hololive member in the database.
+     * @param member the hololive member, including updated data, that should be updated in the database
+     */
+    public void updateMember(HololiveMember member){
+        em.merge(member);
+    }
+
+    /**
+     * Deletes a hololive member from the database.
+     * @param member the hololive member that should be deleted from the database
+     */
+    public void deleteMember(HololiveMember member){
+        em.remove(member);
     }
 
     /**
@@ -40,7 +56,7 @@ public class HololiveMemberRepository {
     }
 
     /**
-     * Gets a hololive member by it's ID from the 'hololive_member' table in the database.
+     * Gets a hololive member from the database by it's ID.
      * @param memberId the ID of the hololive member
      * @return the hololive member
      */

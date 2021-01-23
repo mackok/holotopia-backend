@@ -1,11 +1,14 @@
 package nhl.stenden.service;
 
 import nhl.stenden.dto.HololiveMemberDTO;
+import nhl.stenden.dto.VideoDTO;
 import nhl.stenden.model.HololiveMember;
 import nhl.stenden.repository.HololiveMemberRepository;
+import nhl.stenden.util.ModelMapperUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 /**
  * Service that handles the business logic of requests related to hololive members.
@@ -28,5 +31,14 @@ public class HololiveMemberService {
      */
     public void addMember(HololiveMemberDTO hololiveMember){
         repository.addMember(modelMapper.map(hololiveMember, HololiveMember.class));
+    }
+
+    /**
+     * Gets all videos of a hololive member.
+     * @param memberId the ID of the hololive member whose videos should be retrieved
+     * @return a list containing all videos of the hololive member
+     */
+    public List<VideoDTO> getMemberVideos(Long memberId){
+        return ModelMapperUtil.mapAll(repository.getMemberById(memberId).getVideos(), VideoDTO.class, modelMapper);
     }
 }

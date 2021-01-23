@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import nhl.stenden.model.Video;
 
 import javax.validation.constraints.Size;
-import java.util.Set;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -26,5 +26,5 @@ public class HololiveMemberDTO {
     @Size(min = 1, max = 60)
     private String uploads;
 
-    private Set<Video> videos;
+    private List<Video> videos;
 }

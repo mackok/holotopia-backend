@@ -11,8 +11,6 @@ import nhl.stenden.model.Video;
 import nhl.stenden.repository.HololiveMemberRepository;
 import nhl.stenden.repository.VideoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -50,13 +48,10 @@ public class YoutubeAPIHandler {
     /**
      * Updates the database with necessary info from the YouTube API.
      */
-    @Async
-    @Scheduled(fixedDelay = 1000 * 60 * 15)
-    void updateInfo(){
-        System.out.println("Updating hololive videos in the database...");
+    public void updateInfo(){
         List<HololiveMember> members = memberRepository.getAllMembersWithVideos();
         for(HololiveMember member : members){
-            Set<Video> storedVideos = member.getVideos();
+            List<Video> storedVideos = member.getVideos();
 
             if(storedVideos.isEmpty()){
                 List<PlaylistItem> videoItems = getAllVideos(member.getUploads());
@@ -67,7 +62,6 @@ public class YoutubeAPIHandler {
                 storeLatestVideos(member);
             }
         }
-        System.out.println("Updating of hololive videos complete");
     }
 
     /**
@@ -215,6 +209,7 @@ public class YoutubeAPIHandler {
         Video video = new Video();
         video.setYoutubeCode(videoItem.getContentDetails().getVideoId());
         video.setMember(member);
+        video.setThumbnail(videoItem.getSnippet().getThumbnails().getMedium().getUrl());
         return video;
     }
 }

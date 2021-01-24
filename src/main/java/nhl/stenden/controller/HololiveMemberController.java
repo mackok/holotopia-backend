@@ -28,8 +28,8 @@ public class HololiveMemberController {
      * @param hololiveMember the hololive member that should be added to the database
      */
     @PostMapping
-    public void addMember(@RequestBody @Valid HololiveMemberDTO hololiveMember){
-        service.addMember(hololiveMember);
+    public Long addMember(@RequestBody @Valid HololiveMemberDTO hololiveMember){
+        return service.addMember(hololiveMember);
     }
 
     /**

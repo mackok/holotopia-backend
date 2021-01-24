@@ -5,7 +5,9 @@ import nhl.stenden.dto.VideoDTO;
 import nhl.stenden.exception.IncorrectPathVariableException;
 import nhl.stenden.handler.SpringExceptionHandler;
 import nhl.stenden.model.HololiveMember;
+import nhl.stenden.model.Video;
 import nhl.stenden.repository.HololiveMemberRepository;
+import nhl.stenden.repository.VideoRepository;
 import nhl.stenden.util.ModelMapperUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +35,10 @@ public class HololiveMemberService {
      * Maps a hololive member DTO to a model and adds it to the database.
      * @param memberDTO the DTO of the hololive member that should be added
      */
-    public void addMember(HololiveMemberDTO memberDTO){
+    public Long addMember(HololiveMemberDTO memberDTO){
         HololiveMember member = modelMapper.map(memberDTO, HololiveMember.class);
         SpringExceptionHandler.checkMemberProperties(member);
-        repository.addMember(member);
+        return repository.addMember(member);
     }
 
     /**

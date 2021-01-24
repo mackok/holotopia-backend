@@ -1,9 +1,11 @@
 package nhl.stenden.repository;
 
+import nhl.stenden.exception.IncorrectPathVariableException;
 import nhl.stenden.model.Video;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
@@ -58,7 +60,11 @@ public class VideoRepository {
      * @return the video
      */
     public Video getVideoByYtId(String youtubeVideoId){
-        return (Video) em.createQuery("select v from Video v where youtube_id = :youtubeId")
-                .setParameter("youtubeId", youtubeVideoId).getSingleResult();
+        try{
+            return (Video) em.createQuery("select v from Video v where youtube_id = :youtubeId")
+                    .setParameter("youtubeId", youtubeVideoId).getSingleResult();
+        } catch (NoResultException e){
+            throw new IncorrectPathVariableException(String.format("there is no youtube video with the ID '%s'", youtubeVideoId));
+        }
     }
 }

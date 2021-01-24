@@ -31,6 +31,6 @@ public class HololiveMember {
     @NotNull
     private String uploads;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Video> videos;
 }

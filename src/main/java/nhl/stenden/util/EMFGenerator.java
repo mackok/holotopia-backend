@@ -11,6 +11,10 @@ import java.util.Properties;
  */
 public class EMFGenerator extends UtilClass {
 
+    public EMFGenerator(){
+        super();
+    }
+
     /**
      * Generates an entity manager factory.
      * @param dataSource the data source that should be used

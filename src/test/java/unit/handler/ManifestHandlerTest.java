@@ -23,12 +23,12 @@ class ManifestHandlerTest {
     void getVideoUrlValidTest(){
         video.setYoutubeCode("huOiq5otFaY");
         video.setSts("18634");
-        String videoUrl = "https://r3---sn-5hne.+?(?=\\.)\\.googlevideo\\.com/videoplayback\\?expire=\\d+?(?=&)&ei=.+?(?=&)" +
+        String videoUrl = "https://r3---.+?(?=\\.)\\.googlevideo\\.com/videoplayback\\?expire=\\d+?(?=&)&ei=.+?(?=&)" +
                 "&ip=.+?(?=&)&id=.+?(?=&)&itag=22&source=youtube&requiressl=yes&mh=ws&mm=.+?(?=&)&mn=.+?(?=&)" +
                 "&ms=.+?(?=&)&mv=.+?(?=&pl)&pl=.+?(?=&)&initcwndbps=\\d+?(?=&)&vprv=1" +
                 "&mime=video%2Fmp4&ns=.+?(?=&ratebypass)&ratebypass=yes&dur=11308\\.048&lmt=1610089549666869" +
                 "&mt=.+?(?=&)&fvip=3(&beids=\\d+)?&c=WEB&txp=7316222&n=.+?(?=&)&sparams=.+?(?=&)&sig=.+?(?=&)" +
-                "&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=.+";
+                "&lsparams=.+?(?=&)&lsig=.+";
         Assertions.assertTrue(manifestHandler.getVideoUrl(video).matches(videoUrl));
     }
 

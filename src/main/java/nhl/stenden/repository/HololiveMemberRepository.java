@@ -23,8 +23,9 @@ public class HololiveMemberRepository {
      * Adds a hololive member to the database.
      * @param hololiveMember the hololive member that should be added to the database
      */
-    public void addMember(HololiveMember hololiveMember){
+    public Long addMember(HololiveMember hololiveMember){
         em.persist(hololiveMember);
+        return hololiveMember.getId();
     }
 
     /**

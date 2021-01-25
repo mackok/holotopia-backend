@@ -38,7 +38,7 @@ into your database
 If not, it will gather all videos with their required information and insert it into the database. Since there are no
 videos in the database yet, this is necessary in order to fill the database with the videos from the hololive members.
 
-**This table is used to store user roles related to security.
+**This table is being used to store user roles related to security.
 
 ##Security Instructions
 After starting the application you are required to login to access the REST API. Below is a list of accounts, which were added 

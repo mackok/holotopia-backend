@@ -1,6 +1,9 @@
 package integration;
 
 import nhl.stenden.config.TestConfig;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,6 +18,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import javax.transaction.Transactional;
+
+import java.util.Arrays;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -214,7 +219,9 @@ class HololiveMemberTest {
      * @throws Exception
      */
     private ResultActions addMember() throws Exception {
+        String jsonToken = getValidToken();
         return mockMvc.perform(post("/hololive-members")
+                .header("Authorization", "Bearer " + jsonToken)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(member));
     }
@@ -226,7 +233,9 @@ class HololiveMemberTest {
      * @throws Exception
      */
     private ResultActions deleteMember(Long memberId) throws Exception {
-        return mockMvc.perform(delete("/hololive-members/" + memberId));
+        String jsonToken = getValidToken();
+        return mockMvc.perform(delete("/hololive-members/" + memberId)
+                .header("Authorization", "Bearer " + jsonToken));
     }
 
     /**
@@ -236,8 +245,38 @@ class HololiveMemberTest {
      * @throws Exception
      */
     private ResultActions updateMember(Long memberId) throws Exception {
+        String jsonToken = getValidToken();
         return mockMvc.perform(put("/hololive-members/" + memberId)
+                .header("Authorization", "Bearer " + jsonToken)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(member));
+    }
+
+
+    /**
+     * This method uses user credentials to login in order to do API request
+     * @param user Username used to login
+     * @param password Password used to login
+     * @return Successful login response
+     * @throws Exception
+     */
+    private ResultActions login(String user, String password) throws Exception {
+        return mockMvc.perform(
+                post("/login")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(
+                                new BasicNameValuePair("username", user),
+                                new BasicNameValuePair("password", password)
+                        ))))
+        );
+    }
+
+    /**
+     * This method returns a valid JSON token from the http response header using login credentials
+     * @return Valid JSON token
+     * @throws Exception
+     */
+    private String getValidToken() throws Exception {
+        return login("admin", "admin").andReturn().getResponse().getHeader("json-token");
     }
 }

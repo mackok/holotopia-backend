@@ -29,11 +29,27 @@ public class DatabaseConstants extends UtilClass {
 ```
 4. Replace the values of the database constants with the info of your local database in ```nhl.stenden.util.constants.DatabaseConstants```
 5. Run the application so the database tables will be initialized
-6. Stop the application and insert the hololives members from the directory ``holotopia-backend/sql/hololive-member.sql``
+6. Stop the application and insert the hololive members from the directory ``holotopia-backend/sql/hololive-member.sql``
 into your database
-7. Run the application again and wait till all required video information is added to the database*
+7. Run the application again and wait till all required video information has been added to the database*
+8. Create and fill the ``users`` table in the database using the sql file in ``holotopia-backend/sql/users.sql``**
 
 *The application will check whether the videos from a hololive member (youtube channel) are already in the database.
 If not, it will gather all videos with their required information and insert it into the database. Since there are no
 videos in the database yet, this is necessary in order to fill the database with the videos from the hololive members.
+
+**This table is used to store user roles related to security.
+
+##Security Instructions
+After starting the application you are required to login to access the REST API. Below is a list of accounts, which were added 
+in step 8 of ``setting up the database``, that can be used to access the API.
+
+``/holotopia_backend_war/login`` is the endpoint where you can login using one of the following accounts:
+- <b>Admin</b> (username: admin, password: admin)
+- <b>App</b> (username: app, password: app)
+
+The user ``Admin`` can access all endpoints while the user ``App`` can only access the endpoints that are necessary for
+the frontend of the application. After logging in you receive a ``json-token`` in the header which should be used as a
+bearer token in the ``x-www-form-urlencoded`` part of the body when making API calls.
+
 
